@@ -8,15 +8,8 @@ D. Veilleux
 
 ***************************************************************
 '''
-
-
-# Import Romania Map Data
-import romania_map_data
-
-map_data = romania_map_data.romania_map
-map_locations = romania_map_data.romania_map.locations
-
 import heapq
+
 
 class SimpleProblemSolvingAgent:
     """
@@ -90,23 +83,6 @@ class SimpleProblemSolvingAgent:
 
     def astar(self, queue, end):
         pass
-
-
-
-### --- Testing Section --- ###
-
-start_city = "Arad"
-end_city = "Bucharest"
-search_strategy = "bfs"
-
-problem = SimpleProblemSolvingAgent(map_data, map_locations)
-route = problem.search(start_city, end_city, search_strategy)
-
-if route is not None:
-    print("Route found: ", route)
-else:
-    print("Route not found.")
-
 
 
 
