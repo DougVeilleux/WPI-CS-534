@@ -1,3 +1,6 @@
+import json
+
+
 class Graph:
     """A graph connects nodes (vertices) by edges (links). Each edge can also
     have a length associated with it. The constructor call is something like:
@@ -84,3 +87,6 @@ romania_map.locations = dict(
     Oradea=(131, 571), Pitesti=(320, 368), Rimnicu=(233, 410),
     Sibiu=(207, 457), Timisoara=(94, 410), Urziceni=(456, 350),
     Vaslui=(509, 444), Zerind=(108, 531))
+
+print(json.dumps(distance_dict))
+print(json.dumps(romania_map.locations))
