@@ -4,6 +4,8 @@ Group Assignment 01
 CS 534 - Team 6
 Spring 2023
 
+A. Aguirre
+D. Umbetzhan
 D. Veilleux
 
 ***************************************************************

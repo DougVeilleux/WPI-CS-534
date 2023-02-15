@@ -88,5 +88,11 @@ romania_map.locations = dict(
     Sibiu=(207, 457), Timisoara=(94, 410), Urziceni=(456, 350),
     Vaslui=(509, 444), Zerind=(108, 531))
 
-print(json.dumps(distance_dict))
-print(json.dumps(romania_map.locations))
+# print("City Distance Data:")
+# print(json.dumps(distance_dict))
+# print()
+# print("City Location Data:")
+# print(json.dumps(romania_map.locations))
+# print()
+# print("List of Cities:")
+# print(romania_map.nodes())
