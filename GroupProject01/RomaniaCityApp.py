@@ -8,7 +8,7 @@ import SimpleProblemSolvingAgent
 def main():
     print('=====================================')
     print("Welcome to the RomaniaCityApp.\n")
-    
+
     data = getMapData()
     map_data = romania_map_data.UndirectedGraph(data["distances"])
     locations = data["locations"]
@@ -20,19 +20,26 @@ def main():
     again = True
     while again:
         twocities = inputCities(locations.keys())
-    
+
         start_city = twocities[0]
         end_city = twocities[1]
-        search_strategy = "bfs"
-    
+
         problem = SimpleProblemSolvingAgent.SimpleProblemSolvingAgent(map_data, locations)
-        route = problem.search(start_city, end_city, search_strategy)
-    
-        if route is not None:
-            print("Route found: ", route)
+        routeBFS = problem.search(start_city, end_city, 'BFS')
+        routeASTAR = problem.search(start_city, end_city, 'ASTAR')
+
+        if routeBFS is not None:
+            print("Route found using BFS: ", routeBFS)
         else:
-            print("Route not found.")
-    
+            print("Route not found using BFS.")
+
+        if routeASTAR is not None:
+            (came_from, cost_so_far) = routeASTAR
+            routeASTAR = problem.reconstruct_path(came_from, start_city, end_city)
+            print("Route found using ASTAR: ", routeASTAR)
+        else:
+            print("Route not found using ASTAR.")
+
         again = input("Again? Yes/No ")
         if again.lower() == "yes":
             again = True
@@ -47,10 +54,10 @@ def getMapData():
         print("Where is the map file in your local directory?")
         print("Example Syntax (windows): C:\\Users\\User\\Documents\\mapdata.txt")
         print("Example Syntax (mac): /Users/...Project01/mapdata.txt")
-        path = input()
+        # path = input()
         # path = "/Users/dougveilleux/Documents/GitHub/CS-534/WPI-CS-534/GroupProject01/mapdata.txt"
-        # cwd = os.getcwd()
-        # path = os.path.join(cwd, "mapdata.txt")
+        cwd = os.getcwd()
+        path = os.path.join(cwd, "mapdata.txt")
         try:
             with open(path) as f:
                 data = f.read()
@@ -82,11 +89,6 @@ def inputCities(locations):
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
 
 
 

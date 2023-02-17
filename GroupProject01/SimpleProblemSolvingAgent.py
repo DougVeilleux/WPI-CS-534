@@ -3,14 +3,13 @@
 Group Assignment 01
 CS 534 - Team 6
 Spring 2023
-
 A. Aguirre
 D. Umbetzhan
 D. Veilleux
-
 ***************************************************************
 '''
 import heapq
+from queue import PriorityQueue
 
 
 class SimpleProblemSolvingAgent:
@@ -54,7 +53,7 @@ class SimpleProblemSolvingAgent:
         if strategy.upper() == 'BFS':
             return self.best_first_search(start, end)
         elif strategy.upper() == 'ASTAR':
-            return self.astar(queue, end)
+            return self.astar_search(start, end)
         else:
             return None
 
@@ -151,10 +150,5 @@ class SimpleProblemSolvingAgent:
             end = came_from[end]
             reverse_path.append(end)
         return list(reversed(reverse_path))
-
-
-
-
-
 
 
