@@ -1,5 +1,5 @@
 from pathlib import Path
-from SimpleProblemSolvingAgent import SimpleProblemSolvingAgent
+from for SimpleProblemSolvingAgent import SimpleProblemSolvingAgent
 
 def main():
     while True:
