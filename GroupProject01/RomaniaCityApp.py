@@ -1,94 +1,55 @@
-import json
-import os
-
-import romania_map_data
-import SimpleProblemSolvingAgent
-
+from pathlib import Path
+from SimpleProblemSolvingAgent import SimpleProblemSolvingAgent
 
 def main():
-    print('=====================================')
-    print("Welcome to the RomaniaCityApp.\n")
+    while True:
+        graph_file_name = input("Please enter the name of the file where romania map is located: ")
+        locations_file_name = input("Please enter the name of the file where coordinates of romania cities are located: ")
 
-    data = getMapData()
-    map_data = romania_map_data.UndirectedGraph(data["distances"])
-    locations = data["locations"]
+        file1 = Path('./'+graph_file_name)
+        file2 = Path('./'+locations_file_name)
 
-    print("List of Cities:")
-    print(map_data.nodes())
-    print()
+        if graph_file_name == locations_file_name or not file1.is_file() or not file2.is_file():
+            print("Something went wrong! Either you provided same file names or there is no txt files with given names")
+            continue
 
-    again = True
-    while again:
-        twocities = inputCities(locations.keys())
+        while True:
+            initial_city = input("Please enter the name of the starting destination: ").capitalize()
+            goal_city = input("Please enter the name of the goal destination: ").capitalize()
 
-        start_city = twocities[0]
-        end_city = twocities[1]
+            if initial_city == goal_city:
+                print("You cannot enter same cities as a starting and goal destinations!")
+                continue
 
-        problem = SimpleProblemSolvingAgent.SimpleProblemSolvingAgent(map_data, locations)
-        routeBFS = problem.search(start_city, end_city, 'BFS')
-        routeASTAR = problem.search(start_city, end_city, 'ASTAR')
+            spsa = SimpleProblemSolvingAgent(graph_file_name, locations_file_name, initial_city, goal_city)
 
-        if routeBFS is not None:
-            print("Route found using BFS: ", routeBFS)
-        else:
-            print("Route not found using BFS.")
-
-        if routeASTAR is not None:
-            (came_from, cost_so_far) = routeASTAR
-            routeASTAR = problem.reconstruct_path(came_from, start_city, end_city)
-            print("Route found using ASTAR: ", routeASTAR)
-        else:
-            print("Route not found using ASTAR.")
-
-        again = input("Again? Yes/No ")
-        if again.lower() == "yes":
-            again = True
-        elif again.lower() == "no":
-            print("Thank you for using the RomaniaCityApp!")
-            again = False
+            if not spsa.city_validator():
+                print("City names that you entered are either not in the romania map file or coordinates file. Try again")
+                continue
 
 
-def getMapData():
-    notfound = True
-    while notfound:
-        print("Where is the map file in your local directory?")
-        print("Example Syntax (windows): C:\\Users\\User\\Documents\\mapdata.txt")
-        print("Example Syntax (mac): /Users/...Project01/mapdata.txt")
-        # path = input()
-        # path = "/Users/dougveilleux/Documents/GitHub/CS-534/WPI-CS-534/GroupProject01/mapdata.txt"
-        cwd = os.getcwd()
-        path = os.path.join(cwd, "mapdata.txt")
-        try:
-            with open(path) as f:
-                data = f.read()
-        except:
-            print("File not found try again")
-            notfound = True
-        else:
-            notfound = False
+            bfs_path, bfs_cost = spsa.best_first_graph_search()
+            print("Performing Best First Graph Search")
+            print("Found path: ", bfs_path)
+            print("Total cost: ", bfs_cost)
 
-    print("Map file found!\n")
+            astar_path, astar_cost = spsa.astar_search()
+            print("Performing A* Search")
+            print("Found path: ", astar_path)
+            print("Total cost: ", astar_cost)
 
-    return json.loads(data)
+            again = input("Would you like to try again? Yes/No: ").capitalize()
+
+            if again == "Yes":
+                continue
+            else:
+                print("Thank You For Using Our App")
+                break
 
 
-def inputCities(locations):
-    again = True
-    while again:
-        print("Input two cities from the map. Separate by a space.")
-        twocities = input()
-        cities = twocities.split()
-        city1 = cities[0]
-        city2 = cities[1]
-        if city1 in locations and city2 in locations:
-            again = False
-
-    print("\nCities are valid...searching for best path!")
-    return cities
+        break
 
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
-
-
-
