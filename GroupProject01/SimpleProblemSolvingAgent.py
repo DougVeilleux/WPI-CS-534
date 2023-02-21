@@ -93,22 +93,24 @@ class SimpleProblemSolvingAgent:
         frontier.put((self.h[self.initial_location], self.initial_location))
         path = []
         cost = 0
+        distance = 0
 
         while frontier:
             current_cost, current = frontier.get()
             cost += current_cost
             path.append(current)
 
+            # print(current)
 
             if current == self.goal_location:
                 break
-
-            frontier = PriorityQueue()
 
             for i in self.graph[current]:
                 if i[0] not in path:
                     frontier.put((self.h[i[0]], i[0]))
                     # print(self.h[i[0]], i[0])
+
+
         return path, cost
 
 
@@ -132,15 +134,14 @@ class SimpleProblemSolvingAgent:
 
             path.append(current[0])
             distance += int(current[1])
+            # print(current)
 
             if current[0] == self.goal_location:
                 break
-
-            frontier = PriorityQueue()
 
             for i in self.graph[current[0]]:
                 if i[0] not in path:
                     frontier.put((self.h[i[0]] + int(i[1]) + distance, i))
                     # print(self.h[i[0]] + int(i[1]) + distance, i)
 
-        return path, cost
+        return path, cost ,distance

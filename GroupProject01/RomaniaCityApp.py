@@ -1,5 +1,5 @@
 from pathlib import Path
-from for SimpleProblemSolvingAgent import SimpleProblemSolvingAgent
+from SimpleProblemSolvingAgent import SimpleProblemSolvingAgent
 
 def main():
     while True:
@@ -24,19 +24,21 @@ def main():
             spsa = SimpleProblemSolvingAgent(graph_file_name, locations_file_name, initial_city, goal_city)
 
             if not spsa.city_validator():
-                print("City names that you entered are either not in the romania map file or coordinates file. Try again")
+                print("City names thcat you entered are either not in the romania map file or coordinates file. Try again")
                 continue
 
 
             bfs_path, bfs_cost = spsa.best_first_graph_search()
             print("Performing Best First Graph Search")
-            print("Found path: ", bfs_path)
             print("Total cost: ", bfs_cost)
+            # print("Total distance: ", bfs_distance)
+            print("Found path: ", bfs_path)
 
-            astar_path, astar_cost = spsa.astar_search()
+            astar_path, astar_cost, astar_distance = spsa.astar_search()
             print("Performing A* Search")
-            print("Found path: ", astar_path)
             print("Total cost: ", astar_cost)
+            # print("Total distance: ", astar_distance)
+            print("Found path: ", astar_path)
 
             again = input("Would you like to try again? Yes/No: ").capitalize()
 
