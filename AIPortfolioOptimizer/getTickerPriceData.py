@@ -5,7 +5,7 @@ Script to pull Ticker Symbol Data from specified website (yahoo).
 1) In "Scripting" Section enter the desired Stock Index to Pull Price Data
 2) Once data has been pulled it will be written to a .csv file.
 """
-
+# %%
 """
 ==============================================================================
 Import Modules
@@ -17,6 +17,7 @@ import pandas_datareader.data as pdr
 import yfinance as yf
 
 from getTickerSymbolsHTML import dup_delete, get_tickers
+
 
 """
 ==============================================================================
@@ -46,13 +47,15 @@ def get_price_data(ticker_symbols, start_date, end_date):
     except:
         print('ERROR: >>> Could not get price data from API call.')
 
+
+
 """
 ==============================================================================
 Scripting
 ------------------------------------------------------------------------------
 """
 # --- Specify desired index to pull stock data: 'SP500', 'DOW30', or 'NASDAQ'
-index = 'SP500'
+index = 'DOW30'
 
 # --- Get ticker symbols
 tickers = dup_delete(get_tickers(index))
@@ -94,7 +97,8 @@ print('INFO: Writing Price Data to .csv...')
 start_date = start_date.strftime("%d %b, %Y")
 end_date = end_date.strftime("%d %b, %Y")
 base_filename = 'PriceData ' + index
-df.to_csv(base_filename + ' From ' + start_date + ' To ' + end_date + '.csv')
+df.to_csv(base_filename + ' From ' + start_date + ' To ' + end_date + '.csv', index=True, index_label='Date')
 print('Filename: ' + base_filename + ' From ' + start_date + ' To ' + end_date + '.csv')
 print('INFO: Complete.')
 print(50* '^')
+# %%

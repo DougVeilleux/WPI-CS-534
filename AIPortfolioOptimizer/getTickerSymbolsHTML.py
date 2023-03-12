@@ -4,7 +4,7 @@ getTickerSymbolsHTML.py
 Script to pull Ticker Symbol Data from specified website.
 """
 
-
+# %%
 """
 ==============================================================================
 Import Modules
