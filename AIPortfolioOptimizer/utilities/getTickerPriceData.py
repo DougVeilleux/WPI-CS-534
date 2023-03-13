@@ -5,12 +5,13 @@ Script to pull Ticker Symbol Data from specified website (yahoo).
 1) In "Scripting" Section enter the desired Stock Index to Pull Price Data
 2) Once data has been pulled it will be written to a .csv file.
 """
-# %%
+
 """
 ==============================================================================
 Import Modules
 ------------------------------------------------------------------------------
 """
+import os
 import datetime as dt
 import numpy as np
 import pandas_datareader.data as pdr
@@ -96,9 +97,16 @@ print('INFO: Writing Price Data to .csv...')
 #  Reformat dates for .csv filename
 start_date = start_date.strftime("%d %b, %Y")
 end_date = end_date.strftime("%d %b, %Y")
+# Define filename format
 base_filename = 'PriceData ' + index
-df.to_csv(base_filename + ' From ' + start_date + ' To ' + end_date + '.csv', index=True, index_label='Date')
-print('Filename: ' + base_filename + ' From ' + start_date + ' To ' + end_date + '.csv')
+filename = base_filename + ' From ' + start_date + ' To ' + end_date + '.csv'
+# Specify root path for csv data files
+root_path = os.getcwd()
+relative_path = 'AIPortfolioOptimizer/data'
+file_path = os.path.join(root_path, relative_path)
+
+df.to_csv(f'{file_path}/{filename}', index=True, index_label='Date')
+print('Filename: ' + filename)
 print('INFO: Complete.')
 print(50* '^')
 # %%
